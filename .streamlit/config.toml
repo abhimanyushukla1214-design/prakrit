@@ -1,0 +1,15 @@
+[server]
+headless = true
+# Serves ./static at /app/static/... so the framed site can load its assets.
+enableStaticServing = true
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "light"
+primaryColor = "#1B5E20"
+backgroundColor = "#F5F8F4"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#0B1F3A"
+font = "sans serif"

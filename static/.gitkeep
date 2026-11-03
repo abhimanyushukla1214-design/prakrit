@@ -1,0 +1,2 @@
+Keeps the folder in git. streamlit_app.py copies index.html and assets/ here
+at startup so Streamlit can serve them from /app/static/.

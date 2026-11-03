@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoopGrid — Delhi's waste, matched to value</title>
+<meta name="description" content="LoopGrid is a smart waste exchange for Delhi-NCR: AI segregation, a verified material marketplace, route optimisation and carbon reporting.">
+<meta name="theme-color" content="#D4610A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231A1410'/%3E%3Ccircle cx='9' cy='9' r='2' fill='%23D4610A'/%3E%3Ccircle cx='16' cy='9' r='2' fill='%23D4610A' opacity='.6'/%3E%3Ccircle cx='23' cy='9' r='2' fill='%23D4610A' opacity='.3'/%3E%3Ccircle cx='9' cy='16' r='2' fill='%23D4610A' opacity='.6'/%3E%3Ccircle cx='16' cy='16' r='2' fill='%23D4610A'/%3E%3Ccircle cx='23' cy='16' r='2' fill='%23D4610A' opacity='.6'/%3E%3Ccircle cx='9' cy='23' r='2' fill='%23D4610A' opacity='.3'/%3E%3Ccircle cx='16' cy='23' r='2' fill='%23D4610A' opacity='.6'/%3E%3Ccircle cx='23' cy='23' r='2' fill='%23D4610A'/%3E%3Cpath d='M9 9 L23 23 M23 9 L9 23' stroke='%23FAD9B8' stroke-width='1.5' stroke-linecap='round' opacity='.4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- ============ ICON SPRITE ============ -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 3.6l8 6.9V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><path d="M8 12h8"/></symbol>
+  <symbol id="i-market" viewBox="0 0 24 24"><path d="M4 9h16l-1.2-4.2A2 2 0 0 0 16.9 3H7.1a2 2 0 0 0-1.9 1.8z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 20v-6h6v6"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="m9 4 6 2 6-2v14l-6 2-6-2-6 2V6z"/><path d="M9 4v14M15 6v14"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4"/><path d="M4 20h16"/><path d="M8 16v-4M12.5 16V8M17 16v-6"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4c-8 0-14 4-14 10a5 5 0 0 0 5 5c6 0 9-6 9-15Z"/><path d="M4 21c1.5-6 5-9 10-11"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 6-2 7-2 7h16s-2-1-2-7"/><path d="M10.3 21a2 2 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.3-7-9.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7 3.5C19 15.7 12 20 12 20Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 16V6h11v10"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2-5.5-3-5.5 3 1-6.2L3 9.6l6.2-.9z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-3.5 3.8-5 7-5s5.8 1.5 7 5"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V6l7-3v18M11 21h9V10l-9-4"/><path d="M7 8v.01M7 12v.01M7 16v.01M15 12v.01M15 16v.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.5l3.5 2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 3 20h18z"/><path d="M12 10v4M12 17.5v.01"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-13.7-5L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 13.7 5L20 16"/><path d="M20 20v-4h-4"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="m4 16 5-5 3 3 7-7"/><path d="M14 7h5v5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c1-3 3.2-4.5 6-4.5s5 1.5 6 4.5"/><path d="M16 5.5a3.2 3.2 0 0 1 0 6M18 14.5c2 .6 3.2 2 3.8 4"/></symbol>
+  <symbol id="i-rupee" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 9.5h6M9 13h6M12 9.5V17"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.5 6-10a6 6 0 1 0-12 0c0 4.5 6 10 6 10Z"/><circle cx="12" cy="11" r="2.2"/></symbol>
+  <symbol id="i-recycle" viewBox="0 0 24 24"><path d="M7 7h9l-2-2M17 17H8l2 2"/><path d="M4.5 12a7.5 7.5 0 0 1 12-5.7M19.5 12a7.5 7.5 0 0 1-12 5.7"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M8 3v4M16 3v4M3.5 10h17"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 3.5-3 5-3 9a3.5 3.5 0 0 0 7 0c0-1.6-.7-2.6-1.5-3.4C14 11 13 12 12 12c1.5-3 1.5-6 0-9Z"/><path d="M12 21a6 6 0 0 0 6-6"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9.5h3.5L13 5v14l-5.5-4.5H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6 3.5h3l1.5 4-2 1.5a12 12 0 0 0 5 5l1.5-2 4 1.5v3A2 2 0 0 1 17 18 15 15 0 0 1 4 5a2 2 0 0 1 2-1.5Z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.4 3.8 5.3 3.8 8.5S14.5 18.6 12 20.5c-2.5-1.9-3.8-5.3-3.8-8.5S9.5 5.9 12 3.5Z"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="m12 2 9 9-9 9H3V2h9z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+  <symbol id="i-mountain" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 10H2L8 3z"/></symbol>
+  <symbol id="i-handshake" viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 0 0 1.4 0l4.3-4.3a2 2 0 0 0 0-2.8l-1.4-1.4a2 2 0 0 0-2.8 0L13 12M7 11 5.6 9.6a2 2 0 0 1 0-2.8l1.4-1.4a2 2 0 0 1 2.8 0L11 6.8"/><path d="m2 14 6 6M16 4l6 6"/></symbol>
+  <symbol id="i-clipboard-check" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 2h6v4H9zM9 12l2 2 4-4"/></symbol>
+  <symbol id="i-sign" viewBox="0 0 24 24"><path d="M4 20h16M4 20l5-5 4 4 7-7"/><circle cx="18" cy="6" r="2"/></symbol>
+</svg>
+
+<!-- ============ LANDING ============ -->
+<div id="landing" class="landing">
+  <header class="site-nav">
+    <a class="brand" href="#welcome" data-scroll-top>
+      <span class="brand-mark">
+        <!-- LoopGrid mark: 3×3 grid with loop path -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5" cy="5" r="1.6" fill="currentColor"/>
+          <circle cx="12" cy="5" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="19" cy="5" r="1.6" fill="currentColor" opacity=".3"/>
+          <circle cx="5" cy="12" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+          <circle cx="19" cy="12" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="5" cy="19" r="1.6" fill="currentColor" opacity=".3"/>
+          <circle cx="12" cy="19" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="19" cy="19" r="1.6" fill="currentColor"/>
+          <path d="M5 5 L19 19 M5 12 L12 5 L19 12 L12 19 Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+        </svg>
+      </span>
+      <span class="brand-text">LoopGrid<span class="brand-dot">.</span></span>
+    </a>
+    <nav class="site-links">
+      <a href="#problem">Problem</a>
+      <a href="#product">Product</a>
+      <a href="#impact-band">Impact</a>
+      <a href="#business">Business</a>
+    </nav>
+    <div class="site-nav-actions">
+      <button class="btn btn-ghost btn-sm" id="loginNavBtn" data-open-login>Login</button>
+      <button class="btn btn-primary btn-sm" id="demoNavBtn" data-open-login>Open demo <svg class="icon"><use href="#i-arrow"/></svg></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-grid-bg" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-copy reveal">
+          <span class="eyebrow-pill"><span class="live-dot"></span> HackTheCircle · Sustainability &amp; Social Impact</span>
+          <h1>Delhi's waste isn't worthless.<br><span class="grad">It's just in the wrong place.</span></h1>
+          <p class="hero-sub">LoopGrid connects households and businesses to the <strong>nearest verified kabadiwala</strong> to collect waste <strong>already segregated</strong>, routed onward to higher-tier recyclers. Every handoff is verified on a co-signed ledger.</p>
+          <div class="hero-cta">
+            <button class="btn btn-accent btn-lg" data-open-login>Try live demo <svg class="icon"><use href="#i-arrow"/></svg></button>
+            <a href="#custody" class="btn btn-glass btn-lg"><svg class="icon"><use href="#i-shield"/></svg> Chain of custody</a>
+          </div>
+          <div class="hero-proof">
+            <div class="avatars">
+              <span><svg class="icon" style="width:16px;height:16px;color:var(--ink)"><use href="#i-home"/></svg></span>
+              <span><svg class="icon" style="width:16px;height:16px;color:var(--accent)"><use href="#i-truck"/></svg></span>
+              <span><svg class="icon" style="width:16px;height:16px;color:var(--success)"><use href="#i-building"/></svg></span>
+              <span><svg class="icon" style="width:16px;height:16px;color:var(--bin-blue)"><use href="#i-recycle"/></svg></span>
+            </div>
+            <p><strong>4 verified hops, one circular chain</strong> — Household → Kabadiwala → Aggregator → Recycler.</p>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" style="--delay:120ms">
+          <div class="scan-card">
+            <div class="scan-card-top">
+              <span class="mini-label"><span class="live-dot"></span> Identify item · conformal set</span>
+              <span class="mini-chip">90% set · 1 class</span>
+            </div>
+            <div class="scan-frame">
+              <div class="scan-frame-item"><svg class="icon" style="width:68px;height:68px;color:var(--accent)"><use href="#i-box"/></svg></div>
+              <span class="corner tl"></span><span class="corner tr"></span>
+              <span class="corner bl"></span><span class="corner br"></span>
+              <span class="scanline"></span>
+            </div>
+            <div class="scan-verdict">
+              <div>
+                <p class="scan-name">PET bottle lot</p>
+                <p class="scan-meta">Blue bin · Clean dry recyclable</p>
+              </div>
+              <span class="bin-chip blue"><svg class="icon" style="width:20px;height:20px;color:var(--bin-blue)"><use href="#i-recycle"/></svg></span>
+            </div>
+            <div class="scan-metrics">
+              <div><span>Resale</span><strong>₹22/kg</strong></div>
+              <div><span>Green points</span><strong>+40</strong></div>
+              <div><span>CO₂e range</span><strong>−1.7 to −2.1 kg</strong></div>
+            </div>
+            <div class="scan-progress"><i style="--s:.96"></i></div>
+            <p class="scan-foot">Matched to Rafiq K. (0.4 km away) · Segregated pickup queued</p>
+          </div>
+          <div class="float-chip chip-a"><span class="dot green"></span> Route optimised · <strong>−32% km</strong></div>
+          <div class="float-chip chip-b"><span class="dot teal"></span> 2,450 green points</div>
+          <div class="float-chip chip-c"><svg class="icon" style="width:14px;height:14px;margin-right:4px;"><use href="#i-shield"/></svg> Dual-signed handoff log</div>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat"><strong data-count="11332" data-suffix=" t">11,332 t</strong><span>waste generated in Delhi every day</span></div>
+        <div class="stat"><strong data-count="3">3</strong><span>over-capacity landfills in NCR</span></div>
+        <div class="stat"><strong data-count="70" data-suffix="%">70%</strong><span>of household waste arrives mixed</span></div>
+        <div class="stat"><strong data-count="32" data-suffix="%">32%</strong><span>route distance saved in our pilot model</span></div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section" id="problem">
+      <div class="section-head reveal">
+        <span class="kicker">The broken chain</span>
+        <h2>Waste doesn't lack value.<br>It lacks a <em>connection</em>.</h2>
+        <p>Material leaves a home sorted in intention, arrives mixed in practice, and ends up at Ghazipur. The buyer who would have paid for it never gets the call.</p>
+      </div>
+
+      <div class="broken-chain reveal">
+        <div class="chain-node"><span class="chain-emoji"><svg class="icon" style="width:28px;height:28px;margin:0 auto;color:var(--ink)"><use href="#i-home"/></svg></span><b>Households &amp; shops</b><small>Good material, no direct buyer</small></div>
+        <div class="chain-link broken"><span>✕</span><small>no verified connection</small></div>
+        <div class="chain-node"><span class="chain-emoji"><svg class="icon" style="width:28px;height:28px;margin:0 auto;color:var(--warn)"><use href="#i-trash"/></svg></span><b>Mixed collection</b><small>Value destroyed at source</small></div>
+        <div class="chain-link broken"><span>✕</span><small>scattered pickups</small></div>
+        <div class="chain-node"><span class="chain-emoji"><svg class="icon" style="width:28px;height:28px;margin:0 auto;color:var(--bin-blue)"><use href="#i-building"/></svg></span><b>Aggregators &amp; recyclers</b><small>No steady, pure supply</small></div>
+        <div class="chain-link broken"><span>✕</span><small>zero traceability</small></div>
+        <div class="chain-node danger"><span class="chain-emoji"><svg class="icon" style="width:28px;height:28px;margin:0 auto;color:var(--error)"><use href="#i-mountain"/></svg></span><b>Landfill overflow</b><small>Ghazipur: 65 m high</small></div>
+      </div>
+
+      <div class="problem-grid">
+        <article class="problem-card reveal" style="--delay:60ms">
+          <span class="problem-num">01</span>
+          <h3>Segregation fails at the last metre</h3>
+          <p>People want to sort. But "dry, wet, hazardous" is abstract at 7am with a yoghurt tub in hand. Confusion becomes contamination, and one wet bag ruins a whole sack of paper.</p>
+          <span class="problem-tag">Fix: identify item/lot + direct segregation guidance</span>
+        </article>
+        <article class="problem-card reveal" style="--delay:140ms">
+          <span class="problem-num">02</span>
+          <h3>The informal sector is invisible</h3>
+          <p>Kabadiwalas already run Delhi's recycling. But they work on phone calls and memory, with no price transparency, no route, and no proof of what they collected.</p>
+          <span class="problem-tag">Fix: give collectors a network &amp; verified digital passport</span>
+        </article>
+        <article class="problem-card reveal" style="--delay:220ms">
+          <span class="problem-num">03</span>
+          <h3>Bins are collected blind</h3>
+          <p>Trucks visit every bin on a fixed loop, half of them empty. Fuel is burnt, time is lost, and overflowing bins still get missed because nobody knows the fill level.</p>
+          <span class="problem-tag">Fix: fill sensors + route optimisation</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- PRODUCT FLOW (7-STEP LOOP) -->
+    <section class="section section-tint" id="product">
+      <div class="section-head reveal">
+        <span class="kicker">The canonical loop</span>
+        <h2>Seven steps. Waste to verified impact.</h2>
+        <p>A closed loop where material is matched to the nearest collector already segregated, handed upward to recyclers, and dual-verified at every exchange.</p>
+      </div>
+
+      <div class="flow reveal">
+        <div class="flow-step">
+          <span class="flow-num">1</span>
+          <span class="flow-icon"><svg class="icon"><use href="#i-trash"/></svg></span>
+          <b>Waste</b>
+          <small>Home, campus, shop or business material</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">2</span>
+          <span class="flow-icon"><svg class="icon"><use href="#i-scan"/></svg></span>
+          <b>Identify</b>
+          <small>Camera, voice or bulk item classification</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">3</span>
+          <span class="flow-icon"><svg class="icon"><use href="#i-tag"/></svg></span>
+          <b>Value</b>
+          <small>Transparent price band &amp; clean vs scrap</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">4</span>
+          <span class="flow-icon"><svg class="icon"><use href="#i-handshake"/></svg></span>
+          <b>Match</b>
+          <small>Nearest kabadiwala &amp; onward recycler tier</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">5</span>
+          <span class="flow-icon"><svg class="icon"><use href="#i-truck"/></svg></span>
+          <b>Collect</b>
+          <small>Route + explicit segregation rules</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">6</span>
+          <span class="flow-icon"><svg class="icon"><use href="#i-clipboard-check"/></svg></span>
+          <b>Verify</b>
+          <small>Scale weight, QR scan &amp; co-signed handoff</small>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">7</span>
+          <span class="flow-icon"><svg class="icon"><use href="#i-chart"/></svg></span>
+          <b>Impact</b>
+          <small>CO₂e range, value returned &amp; ESG ledger</small>
+        </div>
+        <div class="flow-loop">↺ the material re-enters the economy; verified custody logs re-enter the ledger</div>
+      </div>
+
+      <!-- VISIBLE CHAIN OF CUSTODY VISUAL -->
+      <div class="custody-section reveal" id="custody">
+        <div class="card-head" style="margin-bottom:12px;">
+          <div>
+            <span class="kicker" style="margin-bottom:4px;">Verified traceability</span>
+            <h3 style="font-size:20px;margin:0;">Chain of Custody &amp; Hand-off Verification</h3>
+          </div>
+          <span class="chip warn">Dual-signed hops</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Waste is collected <strong>already segregated</strong> at source, handed upward through accredited tiers, with collector-confirmed scale weight settling the final value.</p>
+        
+        <div class="custody-chain">
+          <div class="custody-node done">
+            <span class="node-icon"><svg class="icon"><use href="#i-home"/></svg></span>
+            <b>1. Source</b>
+            <small>Household / Campus / Shop</small>
+            <div class="custody-sign"><svg class="icon"><use href="#i-sign"/></svg> Initiated by User</div>
+          </div>
+          <div class="custody-hop signed">
+            <span><svg class="icon"><use href="#i-check"/></svg></span>
+            <small>Segregated as instructed</small>
+          </div>
+          <div class="custody-node active">
+            <span class="node-icon"><svg class="icon"><use href="#i-truck"/></svg></span>
+            <b>2. Collector</b>
+            <small>Nearest Kabadiwala (Rafiq K.)</small>
+            <div class="custody-sign"><svg class="icon"><use href="#i-shield"/></svg> Weight confirmed on scale</div>
+          </div>
+          <div class="custody-hop">
+            <span><svg class="icon"><use href="#i-arrow"/></svg></span>
+            <small>Lot aggregation</small>
+          </div>
+          <div class="custody-node">
+            <span class="node-icon"><svg class="icon"><use href="#i-building"/></svg></span>
+            <b>3. Aggregator / MRF</b>
+            <small>Secondary Sorting &amp; Baling</small>
+            <div class="custody-sign"><svg class="icon"><use href="#i-sign"/></svg> Quality certified</div>
+          </div>
+          <div class="custody-hop">
+            <span><svg class="icon"><use href="#i-arrow"/></svg></span>
+            <small>Factory input</small>
+          </div>
+          <div class="custody-node">
+            <span class="node-icon"><svg class="icon"><use href="#i-recycle"/></svg></span>
+            <b>4. Recycler / Reuser</b>
+            <small>Industrial Pelleting / Remanufacture</small>
+            <div class="custody-sign"><svg class="icon"><use href="#i-shield"/></svg> Final ESG proof</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="layers">
+        <article class="layer-card reveal" style="--delay:40ms">
+          <div class="layer-top"><span class="layer-icon green"><svg class="icon"><use href="#i-user"/></svg></span><span class="layer-tag">B2C</span></div>
+          <h3>Identify &amp; Segregate</h3>
+          <p>Sort with confidence. Identify ambiguous items or bulk furniture/appliances. The collector verifies the lot weight at pickup.</p>
+          <ul class="ticks"><li>Small-item &amp; bulk identification</li><li>Green points for verified handoffs</li><li>Society leaderboards</li></ul>
+        </article>
+        <article class="layer-card reveal" style="--delay:120ms">
+          <div class="layer-top"><span class="layer-icon teal"><svg class="icon"><use href="#i-truck"/></svg></span><span class="layer-tag">COLLECTOR</span></div>
+          <h3>Kabadiwala Network</h3>
+          <p>Doorstep collectors get route optimisation, digital weight logs, transparent market pricing and instant QR handoffs.</p>
+          <ul class="ticks"><li>Verified digital passport</li><li>Weight-settled fair compensation</li><li>Pre-segregated pickup stops</li></ul>
+        </article>
+        <article class="layer-card reveal" style="--delay:200ms">
+          <div class="layer-top"><span class="layer-icon navy"><svg class="icon"><use href="#i-building"/></svg></span><span class="layer-tag">B2B / MRF</span></div>
+          <h3>Recycler Marketplace</h3>
+          <p>Aggregators and re-processors acquire pure, verified streams with co-signed chain of custody and exportable carbon credits.</p>
+          <ul class="ticks"><li>Direct lot bidding &amp; sourcing</li><li>Tamper-evident Merkle ledger</li><li>Scope 3 ESG compliance export</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- IMPACT BAND -->
+    <section class="impact-band" id="impact-band">
+      <div class="impact-band-inner reveal">
+        <span class="kicker light">Modelled pilot impact</span>
+        <h2>Every kilo sorted is methane<br>that never forms.</h2>
+        <div class="impact-big">
+          <strong><span data-count="12480">0</span><small> kg CO₂e</small></strong>
+          <span>diverted across one campus and 240 households in the first 90 days — measured per pickup, not estimated per year.</span>
+        </div>
+        <div class="impact-mini">
+          <div><b>18.6 t</b><span>material recovered</span></div>
+          <div><b>₹3.4 L</b><span>value returned to sellers</span></div>
+          <div><b>1,140 km</b><span>collection distance avoided</span></div>
+          <div><b>2-of-2</b><span>co-signed handoffs</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUSINESS -->
+    <section class="section" id="business">
+      <div class="section-head reveal">
+        <span class="kicker">Business model</span>
+        <h2>Free for homes.<br>Paid where the value is.</h2>
+        <p>Households never pay. Revenue comes from the businesses whose waste has a balance sheet.</p>
+      </div>
+      <div class="price-grid">
+        <article class="price-card reveal">
+          <h3>Household</h3>
+          <p class="price">₹0<span>/ forever</span></p>
+          <p class="price-sub">Segregation, points and pickups.</p>
+          <ul class="ticks"><li>AI bin assistant</li><li>Green points wallet</li><li>Society leaderboard</li></ul>
+          <button class="btn btn-outline full" data-enter-app>Start sorting</button>
+        </article>
+        <article class="price-card featured reveal" style="--delay:80ms">
+          <span class="price-flag">Most used in pilot</span>
+          <h3>Society / campus</h3>
+          <p class="price">₹2,499<span>/ month</span></p>
+          <p class="price-sub">Up to 300 households, one dashboard.</p>
+          <ul class="ticks"><li>Bulk listings + matching</li><li>QR pickup traceability</li><li>Monthly ESG summary</li><li>Bin fill monitoring</li></ul>
+          <button class="btn btn-primary full" data-enter-app>See the dashboard</button>
+        </article>
+        <article class="price-card reveal" style="--delay:160ms">
+          <h3>Business / recycler</h3>
+          <p class="price">6%<span> per trade</span></p>
+          <p class="price-sub">Plus verified buyer subscription.</p>
+          <ul class="ticks"><li>Priority material alerts</li><li>Route + weight records</li><li>Audited ESG reports</li></ul>
+          <button class="btn btn-outline full" data-enter-app>Browse marketplace</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-final reveal">
+      <div>
+        <span class="kicker light">Ready when you are</span>
+        <h2>Sort one bag.<br>See the whole loop.</h2>
+      </div>
+      <div class="cta-actions">
+        <button class="btn btn-accent btn-lg" data-open-login>Open the live demo <svg class="icon"><use href="#i-arrow"/></svg></button>
+        <a href="#custody" class="btn btn-glass btn-lg"><svg class="icon"><use href="#i-shield"/></svg> View verified chain</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <span class="brand-mark small">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5" cy="5" r="1.6" fill="currentColor"/>
+          <circle cx="12" cy="5" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="19" cy="5" r="1.6" fill="currentColor" opacity=".3"/>
+          <circle cx="5" cy="12" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+          <circle cx="19" cy="12" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="5" cy="19" r="1.6" fill="currentColor" opacity=".3"/>
+          <circle cx="12" cy="19" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="19" cy="19" r="1.6" fill="currentColor"/>
+          <path d="M5 5 L19 19 M5 12 L12 5 L19 12 L12 19 Z" stroke="currentColor" stroke-width="1.3" opacity=".5"/>
+        </svg>
+      </span>
+      <div><b>LoopGrid</b><p>Delhi's waste, matched to value.</p></div>
+    </div>
+    <p class="footer-note">Demo build for HackTheCircle. Classifier, sensors and routes are simulated; weights settled on scale; dual-signed chain of custody.</p>
+  </footer>
+</div>
+
+<!-- ============ LOGIN SCREEN (DEMO HONEST AUTH) ============ -->
+<div id="loginScreen" hidden>
+  <div class="login-inner">
+    <div class="login-brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5" cy="5" r="1.6" fill="currentColor"/>
+          <circle cx="12" cy="5" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="19" cy="5" r="1.6" fill="currentColor" opacity=".3"/>
+          <circle cx="5" cy="12" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+          <circle cx="19" cy="12" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="5" cy="19" r="1.6" fill="currentColor" opacity=".3"/>
+          <circle cx="12" cy="19" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="19" cy="19" r="1.6" fill="currentColor"/>
+          <path d="M5 5 L19 19 M5 12 L12 5 L19 12 L12 19 Z" stroke="currentColor" stroke-width="1.3" opacity=".5"/>
+        </svg>
+      </span>
+      <span class="brand-name">LoopGrid<span style="color:var(--accent);">.</span></span>
+    </div>
+
+    <div class="login-head">
+      <h1>Select a demo profile</h1>
+      <p>Explore the live waste exchange from each persona's verified viewpoint.</p>
+    </div>
+
+    <div class="profile-grid">
+      <!-- 1. Ananya (Household) -->
+      <button class="profile-card" data-profile="ananya">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="profile-avatar">AR</span>
+          <div>
+            <h3>Ananya R.</h3>
+            <span class="profile-role">Household</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin:0;">Green Park Society · Sorts waste, books kabadiwala pickups, earns green points.</p>
+        <span class="profile-badge">Default experience · B2C</span>
+      </button>
+
+      <!-- 2. Rafiq Khan (Collector) -->
+      <button class="profile-card" data-profile="rafiq">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="profile-avatar collector">RK</span>
+          <div>
+            <h3>Rafiq Khan</h3>
+            <span class="profile-role">Kabadiwala / Collector</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin:0;">Passport LG-KW-0412 · Beat route, scale weight entry, instant UPI release on QR.</p>
+        <span class="profile-badge" style="background:#E3EEF8;color:#14507E;">Collector View · Weight Settler</span>
+      </button>
+
+      <!-- 3. Green Park RWA (Society) -->
+      <button class="profile-card" data-profile="rwa">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="profile-avatar society">GP</span>
+          <div>
+            <h3>Green Park RWA</h3>
+            <span class="profile-role">Society Manager</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin:0;">300 homes · Bulk lot verification, bin fill monitoring, monthly ESG summary.</p>
+        <span class="profile-badge" style="background:var(--success-100);color:var(--success);">Society Manager · Bulk Ops</span>
+      </button>
+
+      <!-- 4. EcoCircle Recycler (Buyer) -->
+      <button class="profile-card" data-profile="recycler">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="profile-avatar buyer">ER</span>
+          <div>
+            <h3>EcoCircle Recycler</h3>
+            <span class="profile-role">Recycler / Buyer</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin:0;">Delhi-NCR Aggregator · Pure lot sourcing, source quality scores, Merkle ESG audits.</p>
+        <span class="profile-badge" style="background:#F3E8FF;color:#6B21A8;">Buyer Network · Aggregator</span>
+      </button>
+    </div>
+
+    <div class="login-divider"><span>or mobile sign-in</span></div>
+
+    <div class="otp-section otp-disabled">
+      <label class="otp-label">Mobile number</label>
+      <div style="display:flex;gap:8px;">
+        <input type="tel" value="+91 98710 43210" disabled style="flex:1;padding:10px 12px;border:1px solid var(--paper-3);border-radius:10px;background:var(--paper-3);">
+        <button class="btn btn-outline btn-sm" disabled>Send OTP</button>
+      </div>
+      <div class="otp-note">
+        <strong>Honest Note:</strong> Phone + OTP authentication ships in the pilot deployment (requires DLT SMS registration in India). Demo profiles above work immediately with real session persistence.
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <button class="btn btn-ghost btn-sm" data-close-login><svg class="icon"><use href="#i-arrow" style="transform:rotate(180deg);transform-origin:center;"/></svg> Back to landing page</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="app" hidden>
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <a class="brand app-brand" href="#" data-nav="home">
+        <span class="brand-mark">
+        <!-- LoopGrid mark: 3×3 grid with loop path -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5" cy="5" r="1.6" fill="currentColor"/>
+          <circle cx="12" cy="5" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="19" cy="5" r="1.6" fill="currentColor" opacity=".3"/>
+          <circle cx="5" cy="12" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+          <circle cx="19" cy="12" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="5" cy="19" r="1.6" fill="currentColor" opacity=".3"/>
+          <circle cx="12" cy="19" r="1.6" fill="currentColor" opacity=".6"/>
+          <circle cx="19" cy="19" r="1.6" fill="currentColor"/>
+          <path d="M5 5 L19 19 M5 12 L12 5 L19 12 L12 19 Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+        </svg>
+      </span>
+        <span class="brand-text">LoopGrid<span class="brand-dot">.</span></span>
+      </a>
+      <button class="icon-btn sidebar-close" data-close-sidebar aria-label="Close menu"><svg class="icon"><use href="#i-close"/></svg></button>
+    </div>
+
+    <nav class="side-nav" aria-label="Main">
+      <p class="side-label">Workspace</p>
+      <button class="side-link" data-nav="home"><svg class="icon"><use href="#i-home"/></svg><span>Overview</span></button>
+      <button class="side-link" data-nav="scan"><svg class="icon"><use href="#i-scan"/></svg><span>Identify</span><em class="side-badge">AI</em></button>
+      <button class="side-link" data-nav="market"><svg class="icon"><use href="#i-market"/></svg><span>Marketplace</span><em class="side-badge" id="sideMarketCount">8</em></button>
+      <button class="side-link" data-nav="routes"><svg class="icon"><use href="#i-map"/></svg><span>Routes &amp; bins</span></button>
+      <button class="side-link" data-nav="impact"><svg class="icon"><use href="#i-chart"/></svg><span>Impact</span></button>
+      <button class="side-link" data-nav="awaaz"><svg class="icon"><use href="#i-mic"/></svg><span>Awaaz</span><em class="side-badge voice">VOICE</em></button>
+    </nav>
+
+    <div class="side-impact">
+      <div class="side-impact-head"><svg class="icon"><use href="#i-leaf"/></svg><span>Your impact</span></div>
+      <strong><span id="sideCarbon">128.4</span> kg</strong>
+      <p>CO₂e avoided this month</p>
+      <div class="side-progress"><i id="sideCarbonBar" style="--s:.64"></i></div>
+      <small>64% to your next badge</small>
+    </div>
+
+    <div class="side-foot">
+      <button class="side-link" data-exit-app><svg class="icon"><use href="#i-arrow" style="transform:rotate(180deg);transform-origin:center"/></svg><span>Back to overview</span></button>
+      <div class="user-chip" id="sideUserChip" data-switch-profile title="Click to switch demo profile">
+        <span class="avatar" id="sideAvatar">AR</span>
+        <div><b id="sideUserName">Ananya R.</b><small id="sideUserRole">Green Park Society</small></div>
+        <svg class="icon"><use href="#i-chevron"/></svg>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-scrim" data-close-sidebar></div>
+
+  <div class="app-main">
+    <header class="topbar">
+      <button class="icon-btn mobile-menu" data-open-sidebar aria-label="Open menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+      <div class="crumb"><span class="crumb-dot"></span><span id="crumbLabel">Overview</span></div>
+      <div class="topbar-actions">
+        <div class="role-switch" role="group" aria-label="Account type">
+          <button class="role-btn active" data-role="household">Household</button>
+          <button class="role-btn" data-role="society">Society</button>
+          <button class="role-btn" data-role="business">Business</button>
+        </div>
+        <button class="icon-btn voice-btn" data-nav="awaaz" aria-label="Awaaz voice mode"><svg class="icon"><use href="#i-mic"/></svg></button>
+
+        <!-- Notification Centre -->
+        <div class="notif-wrapper">
+          <button class="icon-btn has-dot" id="notifBtn" data-toggle-notif aria-label="Notifications" aria-expanded="false">
+            <svg class="icon"><use href="#i-bell"/></svg>
+            <span class="notif-badge" id="notifBadge">3</span>
+          </button>
+          <div class="notif-panel" id="notifPanel" role="region" aria-label="Notification centre">
+            <div class="notif-header">
+              <b>Notifications</b>
+              <div style="display:flex;gap:12px;">
+                <button type="button" id="notifMarkAllRead">Mark all read</button>
+                <button type="button" id="notifClearAll" style="color:var(--muted);">Clear</button>
+              </div>
+            </div>
+            <div class="notif-list" id="notifList">
+              <!-- Seeded notification items -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Active profile chip + actions -->
+        <button class="profile-chip" id="topProfileBtn" data-switch-profile title="Switch profile">
+          <span class="profile-chip-avatar" id="topProfileAvatar">AR</span>
+          <span id="topProfileName">Ananya R.</span>
+          <svg class="icon" style="width:12px;height:12px;margin-left:2px;"><use href="#i-chevron"/></svg>
+        </button>
+
+        <!-- Logout button -->
+        <button class="icon-btn" id="logoutBtn" data-logout title="Logout session" aria-label="Logout">
+          <svg class="icon"><use href="#i-arrow" style="transform:rotate(180deg);transform-origin:center;"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="view" id="view">
+
+      <!-- HOME -->
+      <section class="page" data-page="home">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> Green Park Society · Delhi</p>
+            <h1>Good morning, Ananya.</h1>
+            <p class="sub">Your block sorted 18% more this week. Two pickups are on the way.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-ghost" data-nav="impact"><svg class="icon"><use href="#i-chart"/></svg> Impact</button>
+            <button class="btn btn-primary" data-nav="scan"><svg class="icon"><use href="#i-scan"/></svg> Identify</button>
+          </div>
+        </div>
+
+        <div class="home-grid">
+          <section class="card impact-card">
+            <div class="impact-card-copy">
+              <p class="card-label">Carbon avoided</p>
+              <div class="impact-number"><span id="homeCarbon">128.4</span><small>kg CO₂e</small></div>
+              <p class="impact-delta"><svg class="icon"><use href="#i-trend"/></svg> 12.6% vs last month</p>
+              <div class="impact-tags"><span>96 kg diverted</span><span>18 pickups</span><span>2.4 t lifetime</span></div>
+            </div>
+            <div class="ring-wrap">
+              <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="ring-track" cx="60" cy="60" r="52"/>
+                <circle class="ring-fill" id="homeRing" cx="60" cy="60" r="52"/>
+              </svg>
+              <div class="ring-center"><strong>64%</strong><span>to badge</span></div>
+            </div>
+          </section>
+
+          <section class="card points-card">
+            <div class="points-top">
+              <div>
+                <p class="card-label">Green points</p>
+                <div class="points-value"><span id="homePoints">2,450</span></div>
+              </div>
+              <span class="points-badge"><svg class="icon"><use href="#i-leaf"/></svg></span>
+            </div>
+            <div class="points-next">
+              <div class="points-next-row"><span>Next reward · ₹100 at Green Park Market</span><b>2,450 / 3,000</b></div>
+              <div class="meter"><i id="pointsMeter" style="--s:.82"></i></div>
+            </div>
+            <div class="points-foot">
+              <span class="streak"><svg class="icon"><use href="#i-flame"/></svg> 6-day streak</span>
+              <button class="btn btn-soft btn-sm" data-redeem>Redeem</button>
+            </div>
+            <div class="streak-strip">
+              <div class="streak-strip-head">
+                <span><svg class="icon"><use href="#i-shield"/></svg> Verified-handoff streak</span>
+                <b id="streakMonthsLabel">2 months</b>
+              </div>
+              <div class="streak-months" id="streakMonths">
+                <span class="on"><i>1</i>₹20</span>
+                <span class="on"><i>2</i>₹60</span>
+                <span><i>3</i>₹100</span>
+              </div>
+              <p class="streak-strip-note"><b id="streakCount">3/4</b> handoffs this month · one grace week · <button class="link-btn" data-streak-info>pilot rules</button></p>
+            </div>
+          </section>
+
+          <div class="quick-row">
+            <button class="quick-tile" data-nav="scan">
+              <span class="quick-icon green"><svg class="icon"><use href="#i-scan"/></svg></span>
+              <span class="quick-copy"><b>Identify</b><small>Routine lot check, single item &amp; bulk pickup</small></span>
+              <svg class="icon quick-arrow"><use href="#i-arrow"/></svg>
+            </button>
+            <button class="quick-tile" data-open-listing>
+              <span class="quick-icon teal"><svg class="icon"><use href="#i-box"/></svg></span>
+              <span class="quick-copy"><b>List material</b><small>Cardboard, PET, textiles</small></span>
+              <svg class="icon quick-arrow"><use href="#i-arrow"/></svg>
+            </button>
+            <button class="quick-tile" data-nav="routes">
+              <span class="quick-icon navy"><svg class="icon"><use href="#i-truck"/></svg></span>
+              <span class="quick-copy"><b>Track pickup</b><small>2 collectors nearby</small></span>
+              <svg class="icon quick-arrow"><use href="#i-arrow"/></svg>
+            </button>
+            <button class="quick-tile" data-nav="awaaz">
+              <span class="quick-icon amber"><svg class="icon"><use href="#i-mic"/></svg></span>
+              <span class="quick-copy"><b>Awaaz</b><small>Bolkar list karein</small></span>
+              <svg class="icon quick-arrow"><use href="#i-arrow"/></svg>
+            </button>
+          </div>
+
+          <!-- ACTIVE PICKUPS & CHAIN OF CUSTODY TRACKER -->
+          <section class="card custody-tracker-card" id="homePickupTracker">
+            <div class="card-head">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <h2>Active pickups &amp; custody chain</h2>
+                  <span class="chip" style="font-size:10px;">Simulated lifecycle</span>
+                </div>
+                <p>Material must be collected already segregated · scale weight settles settlement</p>
+              </div>
+              <div style="display:flex;gap:6px;align-items:center;">
+                <button class="btn btn-ghost btn-sm" id="advanceCustodyHopBtn" title="Simulate next lifecycle handoff">
+                  <svg class="icon"><use href="#i-refresh"/></svg> Advance hop (Demo)
+                </button>
+                <button class="btn btn-outline btn-sm" data-nav="scan">
+                  <svg class="icon"><use href="#i-plus"/></svg> New pickup
+                </button>
+              </div>
+            </div>
+            <div id="pickupTrackerList"></div>
+          </section>
+
+          <section class="card bins-card">
+            <div class="card-head">
+              <div><h2>Bins near you</h2><p>Ultrasonic fill sensors · last ping 2 min ago</p></div>
+              <button class="btn btn-ghost btn-sm" data-nav="routes">Open map <svg class="icon"><use href="#i-arrow"/></svg></button>
+            </div>
+            <div class="bin-list" id="homeBins"></div>
+          </section>
+
+          <section class="card activity-card">
+            <div class="card-head">
+              <div><h2>Live activity</h2><p>Across your society</p></div>
+              <span class="live-tag"><span class="live-dot"></span> Live</span>
+            </div>
+            <ul class="activity-list" id="homeActivity"></ul>
+          </section>
+
+          <section class="card collector-card">
+            <div class="collector-head">
+              <div class="collector-id">
+                <span class="collector-avatar" aria-hidden="true">RK</span>
+                <div>
+                  <p class="card-label">Kabadiwala-first · verified collector</p>
+                  <h2>Rafiq Khan <span class="rep-badge"><svg class="icon"><use href="#i-check"/></svg> 4.9 reputation</span></h2>
+                  <p class="collector-meta">Green Park beat · 312 co-signed pickups · passport LG-KW-0412</p>
+                </div>
+              </div>
+              <span class="chip good"><svg class="icon"><use href="#i-shield"/></svg> KYC + UPI linked</span>
+            </div>
+            <div class="collector-grid">
+              <div class="collector-stat"><span>Settled this month</span><b>₹18,420</b><small>straight to UPI</small></div>
+              <div class="collector-stat"><span>Weight accuracy</span><b>98.6%</b><small>vs buyer scale</small></div>
+              <div class="collector-stat"><span>On-time pickups</span><b>96%</b><small>142 this quarter</small></div>
+              <div class="collector-stat"><span>Clean-handoff bonus</span><b>+6 pts</b><small>to source score</small></div>
+            </div>
+            <div class="collector-actions">
+              <div class="collector-channels">
+                <span class="channel-chip">हिन्दी voice notes</span>
+                <span class="channel-chip">WhatsApp bot</span>
+                <span class="channel-chip">Works on a ₹8,000 phone</span>
+              </div>
+              <button class="btn btn-primary btn-sm" data-collector-payout>Release ₹1,240 on QR</button>
+            </div>
+            <p class="collector-note">Demo passport. In production the reputation is built only from dual-signed handoffs — not self-reported ratings — so a collector’s record travels with them between apps.</p>
+          </section>
+
+          <section class="card onboard-card">
+            <div class="card-head">
+              <div><h2>Finish setting up</h2><p>3 steps · about 4 minutes</p></div>
+              <span class="onboard-count"><span id="onboardDone">1</span>/3 done</span>
+            </div>
+            <div class="onboard-steps" id="onboardSteps">
+              <button class="onboard-step done" data-onboard="0">
+                <span class="step-check"><svg class="icon"><use href="#i-check"/></svg></span>
+                <span class="step-copy"><b>Add your society</b><small>Green Park · 240 households</small></span>
+                <span class="step-state">Done</span>
+              </button>
+              <button class="onboard-step" data-onboard="1" data-nav="scan">
+                <span class="step-check"><span>2</span></span>
+                <span class="step-copy"><b>Identify your first lot</b><small>Routine lot check, odd item, or bulk furniture</small></span>
+                <span class="step-state">Start <svg class="icon"><use href="#i-arrow"/></svg></span>
+              </button>
+              <button class="onboard-step" data-onboard="2" data-open-listing>
+                <span class="step-check"><span>3</span></span>
+                <span class="step-copy"><b>List 5 kg of dry waste</b><small>Unlocks verified buyer matching</small></span>
+                <span class="step-state">Start <svg class="icon"><use href="#i-arrow"/></svg></span>
+              </button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- IDENTIFY (FORMERLY SCAN) -->
+      <section class="page" data-page="scan">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> Identify · routine &amp; bulk</p>
+            <h1>Identify.</h1>
+            <p class="sub">Three ways to identify: routine lot verification at pickup, exception scanner for ambiguous packaging, or bulk item evaluation for large furniture and appliances.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-ghost" data-nav="market"><svg class="icon"><use href="#i-market"/></svg> Marketplace</button>
+          </div>
+        </div>
+
+        <section class="card lot-card">
+          <div class="card-head">
+            <div><h2>Verify a lot</h2><p>The routine path · collector or society manager · one photo at pickup</p></div>
+            <span class="chip good">Primary</span>
+          </div>
+          <div class="lot-grid">
+            <div class="lot-copy">
+              <p>Nobody scans every item before throwing it away. The collector photographs the bag or bin once, checks purity and contamination, and the buyer's acceptance becomes the ground truth. A dirty lot is rejected before it is listed.</p>
+              <div class="lot-presets">
+                <button class="sample" data-lot="clean"><span>♻️</span> Clean dry lot</button>
+                <button class="sample" data-lot="mixed"><span>🗑️</span> Mixed bag</button>
+                <button class="sample" data-lot="hazard"><span>🔋</span> Hazard in lot</button>
+              </div>
+              <p class="fine">Demo lots. In production this is one photo plus the collector-confirmed weight — no item-by-item scanning.</p>
+            </div>
+            <div class="lot-result" id="lotResult">
+              <div class="lot-empty" id="lotEmpty">Pick a demo lot to run the check.</div>
+              <div id="lotResultBody" hidden></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="scan-grid">
+          <section class="card scan-stage">
+            <div class="stage-head">
+              <span class="mini-label"><span class="live-dot"></span> Exception scanner</span>
+              <span class="stage-hint" id="stageHint">Optional · 13 sample items</span>
+            </div>
+            <div class="viewfinder" id="viewfinder">
+              <video id="camera" autoplay playsinline muted hidden></video>
+              <div class="vf-scene" id="vfScene">
+                <div class="vf-glow"></div>
+                <div class="vf-item" id="vfItem">🧴</div>
+                <p class="vf-caption" id="vfCaption">Choose a sample item below, or enable your camera</p>
+              </div>
+              <span class="corner tl"></span><span class="corner tr"></span>
+              <span class="corner bl"></span><span class="corner br"></span>
+              <span class="scanline"></span>
+              <span class="vf-tag" id="vfTag">READY</span>
+            </div>
+            <div class="stage-actions">
+              <button class="btn btn-primary" id="classifyBtn"><svg class="icon"><use href="#i-spark"/></svg> Classify item</button>
+              <button class="btn btn-outline" id="cameraBtn"><svg class="icon"><use href="#i-camera"/></svg> Enable camera</button>
+            </div>
+            <div class="samples" id="samples">
+              <button class="sample active" data-sample="pet"><span>🧴</span>PET bottle</button>
+              <button class="sample" data-sample="cardboard"><span>📦</span>Cardboard</button>
+              <button class="sample" data-sample="food"><span>🍌</span>Food scraps</button>
+              <button class="sample" data-sample="textile"><span>🧵</span>Textile offcut</button>
+              <button class="sample" data-sample="ewaste"><span>🔌</span>E-waste</button>
+              <button class="sample" data-sample="glass"><span>🫙</span>Glass jar</button>
+              <button class="sample" data-sample="mixed"><span>🗑️</span>Mixed bag</button>
+            </div>
+            <div class="samples samples-hard" id="samplesHard">
+              <span class="samples-label">Hard cases</span>
+              <button class="sample" data-sample="multilayer"><span>🍟</span>Chip wrapper</button>
+              <button class="sample" data-sample="tetrapak"><span>🥛</span>Tetra Pak</button>
+              <button class="sample" data-sample="thermocol"><span>🧊</span>Thermocol</button>
+              <button class="sample" data-sample="battery"><span>🔋</span>Battery</button>
+              <button class="sample" data-sample="sanitary"><span>🩹</span>Sanitary waste</button>
+              <button class="sample" data-sample="unknown"><span>❓</span>Unknown</button>
+            </div>
+            <p class="stage-note"><svg class="icon"><use href="#i-shield"/></svg> Use this only for an item you are unsure about — a battery, a wrapper, a dirty tub. Routine bags go through the lot check above. Production strips EXIF, blurs the background, queues offline scans in IndexedDB and asks for DPDP consent before upload. This demo runs a scripted classifier.</p>
+          </section>
+
+          <section class="card scan-result" id="scanResult">
+            <div class="result-empty" id="resultEmpty">
+              <span class="result-empty-icon"><svg class="icon"><use href="#i-scan"/></svg></span>
+              <h2>No scan yet</h2>
+              <p>Pick a sample or enable the camera, then hit <b>Classify item</b>. The result appears here with bin, value and buyer fit.</p>
+              <div class="empty-hints">
+                <span><svg class="icon"><use href="#i-zap"/></svg> ~1s demo inference</span>
+                <span><svg class="icon"><use href="#i-shield"/></svg> 90% conformal set</span>
+              </div>
+            </div>
+            <div class="result-loading" id="resultLoading" hidden>
+              <div class="skeleton skeleton-title"></div>
+              <div class="skeleton skeleton-line"></div>
+              <div class="skeleton skeleton-block"></div>
+              <div class="loading-row"><span class="spinner"></span><span>Running classifier…</span></div>
+              <div class="skeleton skeleton-line short"></div>
+            </div>
+            <div class="result-body" id="resultBody" hidden></div>
+          </section>
+        </div>
+
+        <section class="card manual-card">
+          <div class="manual-copy">
+            <h2>Only when you're unsure</h2>
+            <p>Skip the camera and pick the material manually. You still get the bin, the price band and points — no routine scanning needed.</p>
+          </div>
+          <div class="manual-actions">
+            <div class="select" data-select="manual">
+              <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false"><span data-select-label>Choose material</span><svg class="icon"><use href="#i-chevron"/></svg></button>
+              <div class="select-menu dropdown" role="listbox">
+                <button role="option" data-value="pet">🧴 PET bottle</button>
+                <button role="option" data-value="cardboard">📦 Cardboard</button>
+                <button role="option" data-value="food">🍌 Food scraps</button>
+                <button role="option" data-value="textile">🧵 Textile offcut</button>
+                <button role="option" data-value="ewaste">🔌 E-waste</button>
+                <button role="option" data-value="glass">🫙 Glass jar</button>
+                <button role="option" data-value="mixed">🗑️ Mixed bag</button>
+                <button role="option" data-value="multilayer">🍟 Multilayer wrapper</button>
+                <button role="option" data-value="tetrapak">🥛 Tetra Pak carton</button>
+                <button role="option" data-value="battery">🔋 Battery</button>
+                <button role="option" data-value="sanitary">🩹 Sanitary waste</button>
+              </div>
+            </div>
+            <button class="btn btn-outline" id="manualBtn">Show guidance</button>
+          </div>
+        </section>
+
+        <!-- BULK & LARGE-ITEM IDENTIFICATION -->
+        <section class="card bulk-card" id="bulkCard">
+          <div class="card-head">
+            <div>
+              <span class="eyebrow" style="margin-bottom:4px;"><svg class="icon"><use href="#i-truck"/></svg> Heavy stream pickup</span>
+              <h2>Bulk &amp; large-item identification</h2>
+              <p>Almirah, sofa, mattress, bed, fridge, washing machine, AC, TV, desk, cycle, gas stove…</p>
+            </div>
+            <span class="chip warn">Simulated classifier · scale settles final value</span>
+          </div>
+
+          <div class="bulk-grid">
+            <div class="bulk-input-col">
+              <p style="font-size:12.5px;color:var(--muted);line-height:1.5;">Pick a sample large item below, or upload a photo. Evaluates condition grade, material breakdown, reuse vs scrap price bands, and safe handling requirements.</p>
+
+              <div class="bulk-sample-grid" id="bulkSamples">
+                <button class="bulk-sample-btn active" data-bulk-sample="almirah">
+                  <span class="bulk-sample-icon">🗄️</span>
+                  <span>Steel almirah</span>
+                </button>
+                <button class="bulk-sample-btn" data-bulk-sample="sofa">
+                  <span class="bulk-sample-icon">🛋️</span>
+                  <span>3-seater sofa</span>
+                </button>
+                <button class="bulk-sample-btn" data-bulk-sample="mattress">
+                  <span class="bulk-sample-icon">🛏️</span>
+                  <span>Double mattress</span>
+                </button>
+                <button class="bulk-sample-btn" data-bulk-sample="fridge">
+                  <span class="bulk-sample-icon">❄️</span>
+                  <span>Single-door fridge</span>
+                </button>
+                <button class="bulk-sample-btn" data-bulk-sample="washing_machine">
+                  <span class="bulk-sample-icon">🧺</span>
+                  <span>Washing machine</span>
+                </button>
+                <button class="bulk-sample-btn" data-bulk-sample="ac">
+                  <span class="bulk-sample-icon">💨</span>
+                  <span>Split AC unit</span>
+                </button>
+                <button class="bulk-sample-btn" data-bulk-sample="tv_crt">
+                  <span class="bulk-sample-icon">📺</span>
+                  <span>Old CRT TV</span>
+                </button>
+                <button class="bulk-sample-btn" data-bulk-sample="cycle">
+                  <span class="bulk-sample-icon">🚲</span>
+                  <span>Bicycle</span>
+                </button>
+              </div>
+
+              <label class="bulk-upload" for="bulkFileInput">
+                <input type="file" id="bulkFileInput" accept="image/*" capture="environment">
+                <svg class="icon"><use href="#i-camera"/></svg>
+                <p><strong>Upload or take photo of large item</strong><br><small style="color:var(--muted-2);">Runs simulated visual classifier with honest contract</small></p>
+              </label>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;flex-wrap:wrap;gap:8px;">
+                <span style="font-size:11px;color:var(--muted);"><svg class="icon" style="width:12px;height:12px;vertical-align:-2px;"><use href="#i-shield"/></svg> Structured boundary: identifyBulkItem()</span>
+                <button class="mic-inline-btn" data-voice-sample="Purani steel almirah uthwani hai Green Park se">
+                  <svg class="icon"><use href="#i-mic"/></svg> Voice: "Almirah uthwani hai"
+                </button>
+              </div>
+            </div>
+
+            <div class="bulk-result-col">
+              <div class="bulk-result-card" id="bulkResultBody">
+                <!-- Rendered by renderBulkResult() in app.js -->
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- MARKETPLACE -->
+      <section class="page" data-page="market">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> Verified buyer network · Delhi-NCR</p>
+            <h1>Material marketplace.</h1>
+            <p class="sub">Every listing is scored on recovery potential before it reaches a buyer.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-ghost" data-nav="impact"><svg class="icon"><use href="#i-qr"/></svg> Traceability</button>
+            <button class="btn btn-primary" data-open-listing><svg class="icon"><use href="#i-plus"/></svg> New listing</button>
+          </div>
+        </div>
+
+        <div class="market-stats">
+          <div class="mstat"><span class="mstat-icon green"><svg class="icon"><use href="#i-box"/></svg></span><div><b id="mstatListings">8</b><small>open listings</small></div></div>
+          <div class="mstat"><span class="mstat-icon teal"><svg class="icon"><use href="#i-rupee"/></svg></span><div><b>₹1.86 L</b><small>value on the table</small></div></div>
+          <div class="mstat"><span class="mstat-icon navy"><svg class="icon"><use href="#i-users"/></svg></span><div><b>14</b><small>verified buyers</small></div></div>
+          <div class="mstat"><span class="mstat-icon amber"><svg class="icon"><use href="#i-clock"/></svg></span><div><b>3.2 h</b><small>median match time</small></div></div>
+        </div>
+
+        <div class="filters card">
+          <label class="search-field">
+            <svg class="icon"><use href="#i-search"/></svg>
+            <input type="search" id="marketSearch" placeholder="Search material, locality or seller" autocomplete="off">
+          </label>
+          <div class="filter-actions">
+            <div class="select" data-select="category">
+              <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false"><svg class="icon"><use href="#i-sliders"/></svg><span data-select-label>All categories</span><svg class="icon chev"><use href="#i-chevron"/></svg></button>
+              <div class="select-menu dropdown" role="listbox">
+                <button role="option" data-value="all" class="selected">All categories</button>
+                <button role="option" data-value="Plastic">Plastic</button>
+                <button role="option" data-value="Paper">Paper</button>
+                <button role="option" data-value="Textile">Textile</button>
+                <button role="option" data-value="Organics">Organics</button>
+                <button role="option" data-value="E-waste">E-waste</button>
+                <button role="option" data-value="Glass">Glass</button>
+              </div>
+            </div>
+            <div class="select" data-select="sort">
+              <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false"><span data-select-label>Best match</span><svg class="icon chev"><use href="#i-chevron"/></svg></button>
+              <div class="select-menu dropdown" role="listbox">
+                <button role="option" data-value="match" class="selected">Best match</button>
+                <button role="option" data-value="distance">Nearest first</button>
+                <button role="option" data-value="price">Highest value</button>
+                <button role="option" data-value="qty">Largest quantity</button>
+              </div>
+            </div>
+            <button class="toggle-row" id="verifiedToggle" role="switch" aria-checked="true">
+              <span class="toggle" aria-hidden="true"><span class="toggle-knob"></span></span>
+              <span>Verified only</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="market-grid" id="marketGrid"></div>
+        <div class="empty-state" id="marketEmpty" hidden>
+          <span>🔍</span><h3>No listings match that filter</h3><p>Try a broader category or clear the search.</p>
+          <button class="btn btn-outline btn-sm" id="clearFilters">Clear filters</button>
+        </div>
+      </section>
+
+      <!-- ROUTES -->
+      <section class="page" data-page="routes">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> Collector view · simulated sensor feed</p>
+            <h1>Routes &amp; bins.</h1>
+            <p class="sub">Fill levels come from bin sensors. The router skips anything under the threshold.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-outline" data-voice-sample="40 kilo PET, haan"><svg class="icon"><use href="#i-mic"/></svg> Awaaz: "40 kilo PET, haan"</button>
+            <button class="btn btn-ghost" id="pingSensors"><svg class="icon"><use href="#i-refresh"/></svg> Ping sensors</button>
+            <button class="btn btn-primary" id="optimizeBtn"><svg class="icon"><use href="#i-zap"/></svg> Optimise route</button>
+          </div>
+        </div>
+
+        <div class="route-layout">
+          <!-- COLLECTOR ASSIGNED REQUESTS & SCALE WEIGHT VERIFICATION -->
+          <section class="card collector-requests-card" id="collectorRequestsCard" style="grid-column: 1 / -1;">
+            <div class="card-head">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <h2>Assigned pickup requests · Collector passport LG-KW-0412</h2>
+                  <span class="chip good" style="font-size:10px;">Kabadiwala beat</span>
+                </div>
+                <p>Directed to collect already segregated · enter scale weight &amp; seal handoff on QR</p>
+              </div>
+              <span class="chip" id="collectorPendingCount">1 pending pickup</span>
+            </div>
+            <div id="collectorRequestsList"></div>
+          </section>
+
+          <section class="card map-card">
+            <div class="map-head">
+              <div><h2>South Delhi collection loop</h2><p id="mapSub">8 bins · baseline route 14.2 km</p></div>
+              <div class="map-legend"><span><i class="dot green"></i>Healthy</span><span><i class="dot amber"></i>Filling</span><span><i class="dot red"></i>Overflow risk</span></div>
+            </div>
+            <div class="map-wrap">
+              <svg id="routeMap" viewBox="0 0 640 420" role="img" aria-label="Map of bins and optimised collection route">
+                <defs>
+                  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                    <path d="M32 0H0v32" fill="none" stroke="#E6ECE7" stroke-width="1"/>
+                  </pattern>
+                  <filter id="pinShadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0B1F3A" flood-opacity=".18"/>
+                  </filter>
+                </defs>
+                <rect width="640" height="420" fill="#F7FAF7"/>
+                <rect width="640" height="420" fill="url(#grid)"/>
+                <path class="river" d="M-20 300 C 120 270, 180 340, 300 320 S 520 250, 680 290" />
+                <path class="road major" d="M0 90h640M0 210h640M0 340h640M120 0v420M300 0v420M480 0v420"/>
+                <path class="road" d="M0 150h640M0 270h640M210 0v420M390 0v420M570 0v420"/>
+                <g id="mapRoute"></g>
+                <g id="mapBins"></g>
+              </svg>
+              <div class="map-tooltip" id="mapTooltip" hidden></div>
+              <div class="map-badge" id="mapBadge"><svg class="icon"><use href="#i-truck"/></svg><span>Route ready</span></div>
+            </div>
+            <div class="map-foot">
+              <span><svg class="icon"><use href="#i-pin"/></svg> Green Park · Hauz Khas · Saket · Okhla</span>
+              <span id="mapUpdated">Updated 2 min ago</span>
+            </div>
+          </section>
+
+          <aside class="route-side">
+            <section class="card route-summary">
+              <div class="card-head"><div><h2>This run</h2><p id="routeSub">Baseline loop</p></div><span class="route-chip" id="routeChip">14.2 km</span></div>
+              <div class="route-metrics">
+                <div><b id="rmDistance">14.2</b><small>km total</small></div>
+                <div><b id="rmStops">8</b><small>stops</small></div>
+                <div><b id="rmFuel">4.9</b><small>L diesel</small></div>
+                <div><b id="rmCo2">12.8</b><small>kg CO₂e</small></div>
+              </div>
+              <div class="route-save" id="routeSave"><svg class="icon"><use href="#i-spark"/></svg><span>Optimise to save <b>4.6 km</b> and <b>1.6 L</b> of diesel per run.</span></div>
+              <div class="route-controls">
+                <button class="toggle-row" id="skipToggle" role="switch" aria-checked="true">
+                  <span class="toggle" aria-hidden="true"><span class="toggle-knob"></span></span>
+                  <span>Skip bins under 40%</span>
+                </button>
+                <button class="btn btn-outline btn-sm" id="resetRoute">Reset</button>
+              </div>
+            </section>
+
+            <section class="card stops-card">
+              <div class="card-head"><div><h2>Stops</h2><p id="stopsSub">Suggested order</p></div><span class="live-tag"><span class="live-dot"></span> Live</span></div>
+              <ol class="stop-list" id="stopList"></ol>
+            </section>
+
+            <section class="card predict-card">
+              <div class="card-head"><div><h2>Overflow prediction</h2><p>Next 24 hours</p></div><span class="chip warn">2 alerts</span></div>
+              <ul class="predict-list">
+                <li><span class="predict-dot red"></span><div><b>IIT Gate 2</b><small>Predicted full by 18:40 · 88% now</small></div><em>Route now</em></li>
+                <li><span class="predict-dot amber"></span><div><b>Okhla Phase 2</b><small>Predicted full by 21:10 · 79% now</small></div><em>Monitor</em></li>
+              </ul>
+            </section>
+
+            <section class="card facility-card">
+              <div class="card-head"><div><h2>Where it goes</h2><p>Facility directory</p></div><span class="chip warn">Not connected</span></div>
+              <p class="facility-note">No facility is invented in this demo. Production records come only from official lists and map data, each with a source and a last-verified date.</p>
+              <ul class="facility-sources">
+                <li><b>CPCB / SPCB</b><span>Authorised recyclers, EPR registrations</span><a href="https://cpcb.nic.in" target="_blank" rel="noopener">cpcb.nic.in</a></li>
+                <li><b>Municipal MRFs</b><span>Dry-waste centres and processing plants</span><em>DPCC / MCD lists</em></li>
+                <li><b>OpenStreetMap</b><span>Scrap dealers — always “unverified, call first”</span><a href="https://www.openstreetmap.org" target="_blank" rel="noopener">OSM</a></li>
+              </ul>
+              <p class="fine">Verified only if it appears in an official list. Map-only results stay labelled unverified.</p>
+            </section>
+            <section class="card hardware-card">
+              <div class="card-head"><div><h2>Hardware, optional</h2><p>What we would actually install</p></div><span class="chip warn">Not in demo</span></div>
+              <ul class="hardware-list">
+                <li><b>Passive bin camera</b><span>One ESP32-CAM on a shared bin. No user action; it alerts only when the lot looks wrong.</span><em>₹1,500–2,500 · privacy, power, false alerts</em></li>
+                <li><b>Auto-sorting bin</b><span>Camera + inductive, moisture and load sensors; servo flap; 3–4 containers; fill sensor per container.</span><em>₹3,000–6,000 prototype · jams, wet/crushed errors, maintenance</em></li>
+                <li><b>One lot photo</b><span>No hardware. The collector photographs the bag at pickup; works on any phone.</span><em>Default for the pilot</em></li>
+              </ul>
+              <p class="fine">Auto-sorting suits shared points — campus, mall, society gate — not every household. Low-confidence items go to an “unsure” container and hazardous waste to a locked reject bin.</p>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <!-- IMPACT -->
+      <section class="page" data-page="impact">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> Verified from 96 completed pickups</p>
+            <h1>Impact that audits.</h1>
+            <p class="sub">Every kilogram is tied to a QR event, a weight and a buyer acceptance.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-ghost" data-story><svg class="icon"><use href="#i-volume"/></svg> Sunnein · monthly story</button>
+            <button class="btn btn-outline" id="downloadReport"><svg class="icon"><use href="#i-download"/></svg> Export ESG report</button>
+            <button class="btn btn-primary" data-nav="market"><svg class="icon"><use href="#i-market"/></svg> List material</button>
+          </div>
+        </div>
+
+        <p class="coach-line impact-story-caption" id="storyCaption" hidden></p>
+
+        <div class="impact-role card">
+          <div>
+            <p class="card-label">Viewing as</p>
+            <div class="segmented" role="group" aria-label="Impact view">
+              <button class="seg active" data-impact="household">Household</button>
+              <button class="seg" data-impact="society">Society</button>
+              <button class="seg" data-impact="business">Business</button>
+            </div>
+          </div>
+          <p class="impact-role-note" id="impactNote">Ananya R. · Green Park Society · last 90 days</p>
+        </div>
+
+        <div class="metric-grid">
+          <div class="card metric"><p class="card-label">CO₂e avoided</p><b><span id="imCarbon">128.4</span> <small>kg</small></b><span class="metric-delta up"><svg class="icon"><use href="#i-trend"/></svg> 12.6%</span></div>
+          <div class="card metric"><p class="card-label">Material diverted</p><b><span id="imDiverted">96</span> <small>kg</small></b><span class="metric-delta up"><svg class="icon"><use href="#i-trend"/></svg> 9.4%</span></div>
+          <div class="card metric"><p class="card-label">Value recovered</p><b>₹<span id="imValue">1,840</span></b><span class="metric-delta up"><svg class="icon"><use href="#i-trend"/></svg> 18.1%</span></div>
+          <div class="card metric"><p class="card-label">Pickups verified</p><b><span id="imPickups">18</span></b><span class="metric-delta neutral">100% QR-logged</span></div>
+        </div>
+
+        <div class="chart-grid">
+          <section class="card chart-card">
+            <div class="card-head"><div><h2>Diversion by month</h2><p>Kilograms recovered, Jan – Oct</p></div><span class="chip">2026</span></div>
+            <div class="bar-chart" id="barChart"></div>
+            <div class="chart-legend"><span><i class="dot green"></i>Recovered</span><span><i class="dot grey"></i>Sent to landfill</span></div>
+          </section>
+
+          <section class="card donut-card">
+            <div class="card-head"><div><h2>Material mix</h2><p>By weight, last 90 days</p></div></div>
+            <div class="donut-wrap">
+              <svg class="donut" id="donut" viewBox="0 0 160 160" aria-hidden="true"></svg>
+              <div class="donut-center"><b id="donutTotal">96</b><span>kg total</span></div>
+            </div>
+            <ul class="donut-legend" id="donutLegend"></ul>
+          </section>
+        </div>
+
+        <section class="card source-score">
+          <div class="card-head">
+            <div><h2>Source quality score</h2><p>Contamination history per society · October</p></div>
+            <span class="chip">Buyers price by source</span>
+          </div>
+          <div class="source-list" id="sourceList"></div>
+          <p class="source-rule"><b>Scoring rule:</b> 100 − (contamination % × 1.5) − (reject-stream % × 2.0), clamped 0–100. Recalculated monthly from lot checks and buyer acceptance, not from how often someone scanned, so a society that mixes waste sees its resale price fall.</p>
+        </section>
+
+        <div class="impact-bottom">
+          <section class="card leaderboard">
+            <div class="card-head"><div><h2>Society leaderboard</h2><p>October · kg CO₂e avoided per household</p></div><span class="chip">Green Park · #3</span></div>
+            <ol id="leaderList"></ol>
+          </section>
+
+          <section class="card ledger-card">
+            <div class="card-head"><div><h2>Co-signed ledger</h2><p>Collector + buyer sign every handoff</p></div><span class="chip good"><svg class="icon"><use href="#i-shield"/></svg> 2-of-2 · intact</span></div>
+            <div class="ledger" id="ledgerList"></div>
+            <div class="merkle-anchor" id="merkleAnchor"></div>
+            <p class="ledger-note">Ed25519 signatures from both parties. A daily Merkle root is committed to a public repo, so neither side — nor LoopGrid — can rewrite a row alone.</p>
+            <p class="ledger-note muted">Demo: rows, signatures and the anchor are illustrative. No keys are generated in this build.</p>
+          </section>
+        </div>
+      </section>
+
+      <!-- AWAAZ -->
+      <section class="page" data-page="awaaz">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> Awaaz · voice layer</p>
+            <h1>Bolkar sort karein.</h1>
+            <p class="sub">Hindi, Hinglish or English. The transcript becomes a pickup task; the audio is not stored.</p>
+          </div>
+          <div class="page-actions">
+            <div class="lang-switch" role="group" aria-label="Voice language">
+              <button class="lang-btn active" data-voice-lang="hi">हिन्दी</button>
+              <button class="lang-btn" data-voice-lang="hinglish">Hinglish</button>
+              <button class="lang-btn" data-voice-lang="en">English</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="awaaz-grid">
+          <section class="card voice-card">
+            <div class="card-head">
+              <div><h2>Boliye</h2><p>Push to talk · no always-on listening</p></div>
+              <span class="voice-status" id="voiceStatus"><i class="dot"></i><span>Checking voice…</span></span>
+            </div>
+
+            <div class="voice-stage">
+              <button class="mic-btn" id="micBtn" aria-pressed="false" aria-label="Start speaking">
+                <span class="mic-rings" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="mic-core"><svg class="icon"><use href="#i-mic"/></svg></span>
+              </button>
+              <div class="voice-wave" id="voiceWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+              <p class="mic-label" id="micLabel">Tap to speak</p>
+              <p class="voice-hint" id="voiceHint">Hindi, Hinglish ya English. Audio server par store nahi hota.</p>
+            </div>
+
+            <label class="consent-row" for="voiceConsent">
+              <input type="checkbox" id="voiceConsent">
+              <span>I consent to my voice being processed for this request. Only the transcript is kept, never the audio. <b>DPDP</b></span>
+            </label>
+
+            <div class="voice-type">
+              <label for="voiceText">Ya phir type karein</label>
+              <textarea id="voiceText" rows="2" placeholder="Kal subah 6 baje Sector 12 se 40 kilo PET"></textarea>
+              <div class="voice-samples">
+                <button class="sample-pill" data-voice-sample="40 kilo PET, haan">40 kg PET, haan</button>
+                <button class="sample-pill" data-voice-sample="Purani almirah uthwani hai">Purani almirah uthwani hai</button>
+                <button class="sample-pill" data-voice-sample="Kal subah 6 baje Sector 12 se 40 kilo PET">40 kg PET · kal 6 baje</button>
+                <button class="sample-pill" data-voice-sample="Aaj Green Park se 20 kilo cardboard uthana hai">20 kg cardboard · aaj</button>
+                <button class="sample-pill" data-voice-sample="Mera pickup LG-1043 kahan hai?">Pickup status</button>
+              </div>
+              <button class="btn btn-primary full" id="voiceSend"><svg class="icon"><use href="#i-spark"/></svg> Samjho</button>
+            </div>
+
+            <details class="voice-config">
+              <summary>Voice API settings</summary>
+              <p>The ElevenLabs key stays on the FastAPI server, never in this page. Leave blank to use browser speech.</p>
+              <div class="voice-config-row">
+                <input id="voiceApi" type="url" placeholder="http://localhost:8000" autocomplete="off" spellcheck="false">
+                <button class="btn btn-outline btn-sm" id="voiceTest">Test</button>
+              </div>
+              <p class="voice-config-note" id="voiceConfigNote">Fallback chain: ElevenLabs → browser speech → text.</p>
+            </details>
+          </section>
+
+          <section class="card voice-result" id="voiceResult">
+            <div class="voice-empty" id="voiceEmpty">
+              <span class="result-empty-icon"><svg class="icon"><use href="#i-mic"/></svg></span>
+              <h2>Kuch boliye</h2>
+              <p>Say something like <b>“Kal subah 6 baje Sector 12 se 40 kilo PET”</b>. Awaaz turns it into a structured pickup, then reads the receipt back.</p>
+              <ul class="voice-examples">
+                <li><svg class="icon"><use href="#i-arrow"/></svg> Material + weight + locality + time</li>
+                <li><svg class="icon"><use href="#i-arrow"/></svg> “Pickup LG-1043 kahan hai?”</li>
+                <li><svg class="icon"><use href="#i-arrow"/></svg> “Haan” to co-sign the handoff</li>
+              </ul>
+              <p class="fine">Low confidence never guesses. It asks you to repeat, exactly like the image gate.</p>
+            </div>
+            <div id="voiceResultBody" hidden></div>
+          </section>
+        </div>
+
+        <div class="awaaz-bottom">
+          <section class="card coach-card">
+            <div class="card-head">
+              <div><h2>Segregation coach</h2><p>Spoken explanation, text caption always</p></div>
+              <span class="chip">Caption on</span>
+            </div>
+            <div class="coach-row">
+              <select class="native-select" id="coachPick" aria-label="Material to explain">
+                <option value="pet">PET bottle</option>
+                <option value="cardboard">Cardboard</option>
+                <option value="food">Food scraps</option>
+                <option value="glass">Glass jar</option>
+                <option value="ewaste">E-waste</option>
+                <option value="textile">Textile offcut</option>
+              </select>
+              <button class="btn btn-soft" id="coachPlay"><svg class="icon"><use href="#i-volume"/></svg> Sunnein</button>
+            </div>
+            <p class="coach-line" id="coachLine">Yeh PET bottle hai. Cap alag karein. Blue bin. ₹22/kg.</p>
+          </section>
+
+          <section class="card bin-voice-card">
+            <div class="card-head">
+              <div><h2>Smart bin voices</h2><p>Fixed local-language warnings, cached once</p></div>
+              <span class="chip">Cached</span>
+            </div>
+            <div class="bin-voice-row">
+              <button class="bin-voice" data-bin-voice="dry"><i class="dot green"></i>Dry</button>
+              <button class="bin-voice" data-bin-voice="wet"><i class="dot amber"></i>Wet</button>
+              <button class="bin-voice" data-bin-voice="hazard"><i class="dot red"></i>Hazardous</button>
+            </div>
+            <p class="coach-line" id="binVoiceLine">Yeh dry bin hai. Geela kachra yahan nahi.</p>
+            <p class="fine">Same text + voice + language = one cached file. Fixed prompts are paid once.</p>
+          </section>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="tabbar" aria-label="Mobile navigation">
+      <button class="tab active" data-nav="home"><svg class="icon"><use href="#i-home"/></svg><span>Home</span></button>
+      <button class="tab" data-nav="scan"><svg class="icon"><use href="#i-scan"/></svg><span>Verify</span></button>
+      <button class="tab tab-fab" data-nav="scan" aria-label="Sort and verify waste"><span class="fab-inner"><svg class="icon"><use href="#i-camera"/></svg></span></button>
+      <button class="tab" data-nav="market"><svg class="icon"><use href="#i-market"/></svg><span>Market</span></button>
+      <button class="tab" data-nav="impact"><svg class="icon"><use href="#i-chart"/></svg><span>Impact</span></button>
+    </nav>
+  </div>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-layer" id="modalLayer" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+
+  <div class="modal" id="modalListing" role="dialog" aria-modal="true" aria-labelledby="listingTitle" hidden>
+    <div class="modal-head">
+      <div><span class="modal-kicker">Listing detail</span><h2 id="listingTitle">Material listing</h2></div>
+      <button class="icon-btn" data-close-modal aria-label="Close"><svg class="icon"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="modal-body" id="listingBody"></div>
+  </div>
+
+  <div class="modal" id="modalNew" role="dialog" aria-modal="true" aria-labelledby="newTitle" hidden>
+    <div class="modal-head">
+      <div><span class="modal-kicker">Create listing</span><h2 id="newTitle">List material</h2></div>
+      <button class="icon-btn" data-close-modal aria-label="Close"><svg class="icon"><use href="#i-close"/></svg></button>
+    </div>
+    <form class="modal-body" id="newListingForm">
+      <div class="field-row">
+        <label class="field">
+          <span>Material</span>
+          <div class="select" data-select="newMaterial">
+            <button type="button" class="select-trigger" aria-haspopup="listbox" aria-expanded="false"><span data-select-label>PET bottles</span><svg class="icon"><use href="#i-chevron"/></svg></button>
+            <div class="select-menu dropdown" role="listbox">
+              <button type="button" role="option" data-value="PET bottles" class="selected">PET bottles</button>
+              <button type="button" role="option" data-value="Cardboard">Cardboard</button>
+              <button type="button" role="option" data-value="Textile offcuts">Textile offcuts</button>
+              <button type="button" role="option" data-value="Food scraps">Food scraps</button>
+              <button type="button" role="option" data-value="E-waste">E-waste</button>
+              <button type="button" role="option" data-value="Glass jars">Glass jars</button>
+            </div>
+          </div>
+        </label>
+        <label class="field">
+          <span>Quantity (kg)</span>
+          <input type="number" name="qty" min="1" max="5000" value="40" required>
+        </label>
+      </div>
+      <label class="field"><span>Pickup locality</span><input type="text" name="locality" value="Green Park" required></label>
+      <label class="field"><span>Ask price (₹ per kg)</span><input type="number" name="price" min="0" max="999" value="20" required></label>
+      <label class="field"><span>Notes for the buyer</span><textarea name="notes" rows="3" placeholder="Rinsed, caps removed, tied in bundles…"></textarea></label>
+      <div class="form-note"><svg class="icon"><use href="#i-shield"/></svg> Listings with photos and a segregation score get matched 2.4× faster.</div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal>Cancel</button>
+        <button type="submit" class="btn btn-primary">Publish listing <svg class="icon"><use href="#i-arrow"/></svg></button>
+      </div>
+    </form>
+  </div>
+
+
+
+  <div class="modal" id="modalStreak" role="dialog" aria-modal="true" aria-labelledby="streakTitle" hidden>
+    <div class="modal-head">
+      <div><span class="modal-kicker">Pilot reward</span><h2 id="streakTitle">Verified-handoff streak</h2></div>
+      <button class="icon-btn" data-close-modal aria-label="Close"><svg class="icon"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-lead">A streak counts <b>verified handoffs</b>, not app opens. This is a pilot reward, not guaranteed income.</p>
+      <ul class="rule-list">
+        <li><b>4 handoffs a month.</b> Only one per day counts. The receiver must confirm the weight and material.</li>
+        <li><b>Month 1 pays ₹20, month 2 pays ₹60, month 3 pays ₹100.</b> Each is that month’s payout — not a bonus stacked on the previous one. Total across three months: ₹180.</li>
+        <li><b>One grace week.</b> A single missed week does not wipe progress; a longer gap resets the streak.</li>
+        <li><b>Anti-fraud.</b> Same generator–collector pairs spiking, impossible weights, reused photos and GPS/time mismatches are flagged. Flagged rows do not count.</li>
+        <li><b>Payout.</b> Starts as points or a voucher. Real-money UPI later goes through a licensed payment partner, not a wallet we run.</li>
+        <li><b>Capped pool.</b> Each month has a fixed reward pool; if it runs out, payouts are proportional.</li>
+      </ul>
+      <div class="form-note"><svg class="icon"><use href="#i-shield"/></svg> Demo values. No money moves in this build — the card shows the rule, not a balance.</div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" data-close-modal>Got it</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
